@@ -41,7 +41,7 @@ async function run() {
             $set: user,
 
         };
-        const result = usersCollection.updateOne(query, updateDoc, options);
+        const result = await usersCollection.updateOne(query, updateDoc, options);
         console.log(result);
         res.send(result);
     })
