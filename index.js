@@ -44,7 +44,7 @@ async function run() {
         const result = await usersCollection.updateOne(query, updateDoc, options);
         console.log(result);
         res.send(result);
-    })
+    });
 
     // Send a ping to confirm a successful connection
     await client.db('admin').command({ ping: 1 })
