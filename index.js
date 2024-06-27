@@ -46,6 +46,12 @@ async function run() {
             res.send(result);
         });
 
+        // Get all rooms:-
+        app.get('/rooms', async (req, res) => {
+            const result = await roomsCollection.find().toArray();
+            res.send(result);
+        });
+
         // Save a room in DB:-
         app.post('/rooms', async (req, res) => {
             const room = req.body;
