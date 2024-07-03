@@ -46,6 +46,21 @@ async function run() {
             res.send(result);
         });
 
+        // Save user role in DB:-
+        app.put('/users/:email', async (req, res) => {
+            const email = req.params.email;
+            const user = req.body;
+            const query = { email: email };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: user,
+
+            };
+            const result = await usersCollection.updateOne(query, updateDoc, options);
+            console.log(result);
+            res.send(result);
+        });
+
         // Get all rooms:-
         app.get('/rooms', async (req, res) => {
             const result = await roomsCollection.find().toArray();
