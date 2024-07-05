@@ -31,7 +31,7 @@ async function run() {
         const roomsCollection = client.db('aircnc').collection('rooms');
         const bookingsCollection = client.db('aircnc').collection('bookings');
 
-        // Save user email and role in DB:-
+        // Save user email in DB:-
         app.put('/users/:email', async (req, res) => {
             const email = req.params.email;
             const user = req.body;
@@ -42,7 +42,6 @@ async function run() {
 
             };
             const result = await usersCollection.updateOne(query, updateDoc, options);
-            console.log(result);
             res.send(result);
         });
 
@@ -57,9 +56,19 @@ async function run() {
 
             };
             const result = await usersCollection.updateOne(query, updateDoc, options);
-            console.log(result);
             res.send(result);
         });
+
+        // Get a user:-
+        app.get('/users/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email: email };
+            const result = await usersCollection.findOne(query);
+            res.send(result);
+        })
+
+
+        // ---------------------------
 
         // Get all rooms:-
         app.get('/rooms', async (req, res) => {
@@ -70,12 +79,12 @@ async function run() {
         // Get a single room:-
         app.get('/rooms/:id', async (req, res) => {
             const id = req.params.id;
-            const query = {_id: new ObjectId(id)};
+            const query = { _id: new ObjectId(id) };
             const result = await roomsCollection.findOne(query);
             res.send(result);
         });
 
-        // Save a room in DB:-
+        // Post (Save) a room in DB:-
         app.post('/rooms', async (req, res) => {
             const room = req.body;
             console.log(room);
