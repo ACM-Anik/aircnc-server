@@ -92,6 +92,16 @@ async function run() {
             res.send(result);
         });
 
+        
+        //-----------BookingsCollection:-----------
+        // Save a booking in DB:-
+        app.post('/bookings', async (req, res) => {
+            const room = req.body;
+            console.log(room);
+            const result = await bookingsCollection.insertOne(room);
+            res.send(result);
+        });
+
 
 
 
