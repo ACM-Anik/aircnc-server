@@ -93,6 +93,17 @@ async function run() {
 
 
         //-----------BookingsCollection:-----------
+        // Get bookings for quest
+        app.get('/bookings', async (req, res) => {
+            const email = req.query.email;
+            if(!email){
+                res.send({});
+            }
+            const query = {'guest.email': email}; // Object er bhitorer property pete hole cottation use korte hobe
+            const result = await bookingsCollection.find(query).toArray();
+            res.send(result);
+        });
+
         // Save a booking in DB:-
         app.post('/bookings', async (req, res) => {
             const room = req.body;
@@ -101,11 +112,12 @@ async function run() {
             res.send(result);
         });
 
-        // Update room booking status
+        // Update room booking status:-
         app.patch('/rooms/status/:id', async (req, res) => {
             const id = req.params.id;
             const status = req.body.status;
-            const query = {_id: new ObjectId(id)};
+            console.log(status);
+            const query = { _id: new ObjectId(id) };
             const updateDoc = {
                 $set: {
                     booked: status,
