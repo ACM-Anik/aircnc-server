@@ -96,10 +96,10 @@ async function run() {
         // Get bookings for quest
         app.get('/bookings', async (req, res) => {
             const email = req.query.email;
-            if(!email){
+            if (!email) {
                 res.send({});
             }
-            const query = {'guest.email': email}; // Object er bhitorer property pete hole cottation use korte hobe
+            const query = { 'guest.email': email }; // Object er bhitorer property pete hole cottation use korte hobe
             const result = await bookingsCollection.find(query).toArray();
             res.send(result);
         });
@@ -127,6 +127,13 @@ async function run() {
             res.send(update);
         })
 
+        // Delete a booking:-
+        app.get('/bookings/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await bookingsCollection.deleteOne(query);
+            res.send(result);
+        });
 
 
         // Send a ping to confirm a successful connection
