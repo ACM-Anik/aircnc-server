@@ -68,11 +68,18 @@ async function run() {
         })
 
 
-        // ---------------------------
-
+        // ------------RoomCollections--------------
         // Get all rooms:-
         app.get('/rooms', async (req, res) => {
             const result = await roomsCollection.find().toArray();
+            res.send(result);
+        });
+
+        // Get filtered rooms:-
+        app.get('/rooms/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { 'host.email': email };
+            const result = await roomsCollection.find(query).toArray();
             res.send(result);
         });
 
